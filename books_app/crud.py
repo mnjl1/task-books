@@ -1,3 +1,4 @@
+from typing import List
 from sqlalchemy.orm import Session
 from . import models, schemas
 
@@ -38,9 +39,23 @@ def get_book(db: Session, book_id: int):
     return db.query(models.Book).filter(models.Book.id == book_id).first()
 
 
-def create_author_book(db: Session, book: schemas.BookCreate, author_id: int):
-    db_book = models.Book(**book.dict(), author_id=author_id)
+def create_book(db: Session, book: models.Book):
+    db_book = models.Book(**book.dict())
+    db
     db.add(db_book)
     db.commit()
     db.refresh(db_book)
     return db_book
+
+
+def book_add_author(db: Session, book_id: int, author_id: int):
+    author_add = get_author(db, author_id)
+    book = get_book(db, book_id)
+    book_authors = book.authors
+    if author_add not in book_authors:
+        book_authors.append(author_add)
+        setattr(book, 'authors', book_authors)
+        db.add(book)
+        db.commit()
+        db.refresh(book)
+    return book

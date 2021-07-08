@@ -3,6 +3,11 @@ from sqlalchemy.orm import relationship
 
 from .database import Base
 
+author_book = Table('authorbook', Base.metadata,
+                    Column('author_id', Integer, ForeignKey('authors.id')),
+                    Column('book_id', Integer, ForeignKey('books.id'))
+                    )
+
 
 class Author(Base):
     __tablename__ = 'authors'
@@ -10,7 +15,11 @@ class Author(Base):
     id = Column(Integer, primary_key=True, index=True)
     first_name = Column(String)
     last_name = Column(String)
-    books = relationship('Book', back_populates='author')
+    books = relationship(
+        'Book',
+        secondary=author_book,
+        back_populates='authors'
+    )
 
 
 class Book(Base):
@@ -18,13 +27,8 @@ class Book(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     book_name = Column(String)
-    author_id = Column(Integer, ForeignKey('authors.id'))
-    author = relationship('Author', back_populates='books')
-
-
-# author_book = Table('authorbook', Base.metadata,
-#                     Column('authors_id', Integer, ForeignKey('authors.id'),
-#                            primary_key=True),
-#                     Column('books_id', Integer, ForeignKey('books.id'),
-#                            primary_key=True)
-#                     )
+    authors = relationship(
+        'Author',
+        secondary=author_book,
+        back_populates='books'
+    )

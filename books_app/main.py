@@ -46,12 +46,13 @@ def get_author(author_id: int, db: Session = Depends(get_db)):
     return author
 
 
-@app.post('/authors/{author_id}/books/', response_model=schemas.Book)
-def create_book(author_id: int, book: schemas.BookCreate, db: Session = Depends(get_db)):
+@app.post('/books/', response_model=schemas.Book)
+def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
     """
-    Create book
+    Create book without an author.
+    Author can be added to book with def book_add_author()
     """
-    return crud.create_author_book(db=db, book=book, author_id=author_id)
+    return crud.create_book(db=db, book=book)
 
 
 @app.get('/books/', response_model=List[schemas.Book])
@@ -61,3 +62,12 @@ def get_books(skip: int = 0, db: Session = Depends(get_db)):
     """
     books = crud.get_books(db, skip=skip)
     return books
+
+
+@app.post('/books/{id}/{author_id}', response_model=schemas.Book)
+def book_add_author(book_id: int, author_id: int, db: Session = Depends(get_db)):
+    """
+        Add author to book, 
+        params: book_id, author_id
+    """
+    return crud.book_add_author(db, book_id=book_id, author_id=author_id)

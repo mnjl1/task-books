@@ -1,5 +1,24 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
+
+
+class AuthorBase(BaseModel):
+    first_name: Optional[str]
+    last_name: Optional[str]
+    # id: int
+
+
+class AuthorCreate(AuthorBase):
+    pass
+
+
+class Author(AuthorBase):
+    id: int
+    # first_name: str
+    # last_name: str
+
+    class Config:
+        orm_mode = True
 
 
 class BookBase(BaseModel):
@@ -10,26 +29,13 @@ class BookCreate(BookBase):
     pass
 
 
-class Book(BookBase):
-    id: int
-    author_id: int
-
-    class Config:
-        orm_mode = True
-
-
-class AuthorBase(BaseModel):
-    first_name: str
-    last_name: str
-
-
-class AuthorCreate(AuthorBase):
+class BookUpdate(BookBase):
     pass
 
 
-class Author(AuthorBase):
+class Book(BookBase):
     id: int
-    books: List[Book] = []
+    authors: List[Author] = []
 
     class Config:
         orm_mode = True
