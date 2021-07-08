@@ -5,7 +5,6 @@ from pydantic import BaseModel
 class AuthorBase(BaseModel):
     first_name: Optional[str]
     last_name: Optional[str]
-    # id: int
 
 
 class AuthorCreate(AuthorBase):
@@ -14,8 +13,6 @@ class AuthorCreate(AuthorBase):
 
 class Author(AuthorBase):
     id: int
-    # first_name: str
-    # last_name: str
 
     class Config:
         orm_mode = True
