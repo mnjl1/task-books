@@ -1,9 +1,8 @@
 from fastapi import APIRouter
-from sqlalchemy import engine
 from typing import List
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
-from .. import crud, models, schemas
+from .. import crud, schemas
 from ..database import get_db
 
 router_authors = APIRouter(
@@ -29,12 +28,12 @@ def get_authors(skip: int = 0, db: Session = Depends(get_db)):
     return authors
 
 
-@router_authors.get('//{author_id}', response_model=schemas.Author)
+@router_authors.get('/{author_id}', response_model=schemas.Author)
 def get_author(author_id: int, db: Session = Depends(get_db)):
     """
         Get author by id
     """
     author = crud.get_author(db, author_id=author_id)
     if author is None:
-        raise HTTPException(status_code=404, detail='Author not found')
+        raise HTTPException(status_code=404, detail='Author not found!')
     return author

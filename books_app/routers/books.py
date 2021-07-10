@@ -4,6 +4,8 @@ from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 from .. import crud, schemas
 from ..database import get_db
+from starlette.graphql import GraphQLApp
+
 
 router_books = APIRouter(
     prefix='/books',
@@ -29,7 +31,15 @@ def get_books(skip: int = 0, db: Session = Depends(get_db)):
     return books
 
 
-@router_books.post('//{id}/{author_id}', response_model=schemas.Book)
+@router_books.get('/{book_id}', response_model=schemas.Book)
+def get_book(book_id: int, db: Session = Depends(get_db)):
+    book = crud.get_book(db, book_id=book_id)
+    if book is None:
+        raise HTTPException(status_code=404, detail='Book not found!')
+    return book
+
+
+@router_books.post('/{id}/{author_id}', response_model=schemas.Book)
 def book_add_author(book_id: int, author_id: int, db: Session = Depends(get_db)):
     """
         Add author to book, 
