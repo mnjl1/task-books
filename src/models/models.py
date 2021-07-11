@@ -1,5 +1,6 @@
 from sqlalchemy import Integer, String, Column, ForeignKey, Table
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql.functions import count
 
 from src.database import Base
 
