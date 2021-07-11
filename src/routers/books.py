@@ -2,9 +2,9 @@ from fastapi import APIRouter
 from typing import List
 from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
-from .. import crud, schemas
+from .. import crud
+from src.schemas import schemas
 from ..database import get_db
-from starlette.graphql import GraphQLApp
 
 
 router_books = APIRouter(

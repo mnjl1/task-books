@@ -21,6 +21,9 @@ class Author(Base):
         back_populates='authors'
     )
 
+    def coutBooks(self):
+        return len(self.books)
+
 
 class Book(Base):
     __tablename__ = 'books'

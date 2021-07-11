@@ -2,7 +2,8 @@ from fastapi import APIRouter
 from typing import List
 from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
-from .. import crud, schemas
+from src.schemas import schemas
+from .. import crud
 from ..database import get_db
 
 router_authors = APIRouter(

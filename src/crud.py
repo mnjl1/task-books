@@ -1,13 +1,20 @@
+from graphene.types import json
 from sqlalchemy.orm import Session
+from sqlalchemy.sql.functions import count
 from src.models import models
-from src import schemas
+from src.schemas import schemas
+from fastapi.responses import JSONResponse
 
 
 def get_author(db: Session, author_id: int):
     """
         Get author by id
     """
-    return db.query(models.Author).filter(models.Author.id == author_id).first()
+    author = db.query(models.Author).filter(
+        models.Author.id == author_id).first()
+
+    return JSONResponse(
+        {"first_name": author.first_name, "last_name": author.last_name, "books": author.coutBooks()})
 
 
 def get_authors(db: Session, skip: int = 0):
