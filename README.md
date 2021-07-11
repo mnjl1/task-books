@@ -16,11 +16,14 @@ FastApi, SqlAlchemy, Docker, Graphen
 2. FAstApi + SqlAlchemy + Graphen
    http://127.0.0.1:8080/grapgql
 
-Тест:
-Не смог разобраться почему не импортируется
-модуль graphen при выполнениии команды в командной строке pytest,
-хотя тесты работали какое-то время.
+Не выполнено:
 
-Ошибка:
-import graphene
-ModuleNotFoundError: No module named 'graphene'
+1. Тест:
+   Не смог разобраться почему не импортируется
+   модуль graphen при выполнениии команды в командной строке pytest,
+   хотя тесты работали какое-то время.
+   Ошибка:
+   import graphene
+   ModuleNotFoundError: No module named 'graphene'
+
+2. Поиск по авторам и книгам. Не хватило времени.
