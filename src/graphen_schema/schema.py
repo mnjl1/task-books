@@ -3,10 +3,10 @@ from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 from sqlalchemy.orm import session
 from sqlalchemy.orm.session import sessionmaker
-from books_app import crud, database
+from src import crud, database
 # from books_app.models import Author
 from sqlalchemy.orm import Session
-from books_app.database import get_db
+from src.database import get_db
 from fastapi import Depends
 
 db = get_db()

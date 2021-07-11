@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from . import models, schemas
+from src.models import models
+from src import schemas
 
 
 def get_author(db: Session, author_id: int):

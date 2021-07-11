@@ -1,13 +1,13 @@
 import graphene
+import uvicorn
 from starlette.graphql import GraphQLApp
 from sqlalchemy import engine
 from typing import List
-from fastapi import Depends, FastAPI, HTTPException
-from sqlalchemy.orm import Session
-from . import crud, models, schemas
-from .database import SessionLocal, engine
-from .routers import authors, books
-from .graphen_schema.schema import Query
+from fastapi import FastAPI
+from .models import models
+from src.database import engine
+from src.routers import authors, books
+from src.graphen_schema.schema import Query
 
 
 models.Base.metadata.create_all(bind=engine)

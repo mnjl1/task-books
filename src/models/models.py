@@ -1,7 +1,7 @@
 from sqlalchemy import Integer, String, Column, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
-from .database import Base
+from src.database import Base
 
 author_book = Table('authorbook', Base.metadata,
                     Column('author_id', Integer, ForeignKey('authors.id')),
